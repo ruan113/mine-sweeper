@@ -19,6 +19,7 @@ function Header(): JSX.Element {
 
   useEffect(() => {
     let interval: NodeJS.Timer;
+    setTime(0);
 
     interval = setInterval(() => {
       setTime((t) => t + 1000);

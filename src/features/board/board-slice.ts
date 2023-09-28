@@ -24,6 +24,7 @@ export const boardSlice = createSlice<
     StartBoard: (state) => {
       state.squares = initializeBoard();
       state.gameStatus = 'OnGoing';
+      state.gameStartedAt = new Date();
     },
     ClickSquare: (state, { payload }: ClickSquareAction) => {
       const square = state.squares[payload.squareY][payload.squareX];
