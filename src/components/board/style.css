@@ -1,0 +1,47 @@
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.not-revealed-cell {
+  cursor: pointer;
+  box-sizing: border-box;
+  background: #bcbcbc;
+  border: 5px outset #e3e3e3;
+  pointer-events: auto;
+}
+
+.revealed-cell {
+  cursor: unset;
+  box-sizing: border-box;
+  background: #afafaf;
+  border: 1px solid #6c6c6c;
+  pointer-events: auto;
+}
+
+.bomb {
+  background-color: #f00;
+  color: #fff;
+}
+
+.hasBomb {
+  background-color: rgb(255, 167, 167);
+}
+
+.exploded {
+  background-color: red;
+}
+
+.board-container {
+  width: fit-content;
+}

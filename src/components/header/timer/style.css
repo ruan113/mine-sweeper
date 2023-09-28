@@ -1,0 +1,23 @@
+.timer-container {
+  border-radius: 4px;
+  background-color: #111111;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  font-size: 30px;
+  padding: 0 10px;
+  color: red;
+}
+
+.container {
+  color: #0303d6;
+  color: #16a000;
+  color: #ec0404;
+  color: #7401e5;
+  color: #e58101;
+  color: #ff5733;
+  color: #008080;
+  color: #c71585;
+  color: #b41b49;
+  color: #1077ff;
+}
