@@ -87,7 +87,7 @@ const valueColorMap: Record<number, string> = {
 function getSquareClasses(square: Square): string {
   const classes = ['cell', 'unselectable'];
 
-  if (square.hasBomb) classes.push('hasBomb');
+  // if (square.hasBomb) classes.push('hasBomb');
   if (square.state === 'exploded') classes.push('exploded');
   if (square.state === 'hidden') classes.push('not-revealed-cell');
   if (square.state === 'revealed') classes.push('revealed-cell');
