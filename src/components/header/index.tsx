@@ -16,19 +16,28 @@ function Header(): JSX.Element {
   const squaresWithFlag = squares.flat().filter((it) => it.hasFlag);
 
   const [time, setTime] = useState<number>(0);
+  const [lastGameStatus, setLastGameStatus] = useState<string | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     let interval: NodeJS.Timer;
-    setTime(0);
 
-    interval = setInterval(() => {
-      setTime((t) => t + 1000);
-    }, 1000);
+    if (lastGameStatus !== gameStatus) {
+      setLastGameStatus(gameStatus);
+    }
+
+    if (lastGameStatus !== 'OnGoing') {
+      setTime(0);
+      interval = setInterval(() => {
+        setTime((t) => t + 1000);
+      }, 1000);
+    }
 
     return () => {
       clearInterval(interval);
     };
-  }, [gameStartedAt]);
+  }, [gameStartedAt, gameStatus]);
 
   return (
     <div className="header-container">

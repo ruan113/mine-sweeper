@@ -3,6 +3,10 @@
   justify-content: center;
   padding: 5px;
   justify-content: space-between;
+  background-color: #b7b7b7;
+  border-left: 2px solid #ababab;
+  border-right: 2px solid #ababab;
+  border-top: 2px solid #ababab;
 }
 
 .selectable {

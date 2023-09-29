@@ -44,4 +44,7 @@
 
 .board-container {
   width: fit-content;
+  margin: 50px auto;
+  border: 2px solid #ababab;
+  padding: 2px;
 }
