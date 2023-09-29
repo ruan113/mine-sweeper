@@ -5,7 +5,7 @@ import { ClickSquareAction, Square, ToogleFlagOnSquareAction } from './actions';
 
 export type BoardState = {
   squares: Square[][];
-  gameStatus: 'Won' | 'Lost' | 'OnGoing';
+  gameStatus: 'Won' | 'Lost' | 'OnGoing' | 'Start';
   gameStartedAt: Date;
 };
 
@@ -17,16 +17,18 @@ export const boardSlice = createSlice<
   name: 'board',
   initialState: {
     squares: initializeBoard(),
-    gameStatus: 'OnGoing',
+    gameStatus: 'Start',
     gameStartedAt: new Date(),
   },
   reducers: {
     StartBoard: (state) => {
       state.squares = initializeBoard();
-      state.gameStatus = 'OnGoing';
+      state.gameStatus = 'Start';
       state.gameStartedAt = new Date();
     },
     ClickSquare: (state, { payload }: ClickSquareAction) => {
+      if (state.gameStatus !== 'OnGoing') state.gameStatus = 'OnGoing';
+
       const square = state.squares[payload.squareY][payload.squareX];
       if (square.state !== 'hidden') return;
 

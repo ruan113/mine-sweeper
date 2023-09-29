@@ -16,19 +16,15 @@ function Header(): JSX.Element {
   const squaresWithFlag = squares.flat().filter((it) => it.hasFlag);
 
   const [time, setTime] = useState<number>(0);
-  const [lastGameStatus, setLastGameStatus] = useState<string | undefined>(
-    undefined,
-  );
+  const [lastGameStatus, setLastGameStatus] = useState<string>('Start');
 
   useEffect(() => {
     let interval: NodeJS.Timer;
 
-    if (lastGameStatus !== gameStatus) {
-      setLastGameStatus(gameStatus);
-    }
+    setLastGameStatus(gameStatus);
+    if (gameStatus === 'Start') setTime(0);
 
-    if (lastGameStatus !== 'OnGoing') {
-      setTime(0);
+    if (gameStatus === 'OnGoing') {
       interval = setInterval(() => {
         setTime((t) => t + 1000);
       }, 1000);
@@ -55,6 +51,7 @@ function Header(): JSX.Element {
             dispatch(StartBoard({}));
           }}
         >
+          {gameStatus === 'Start' && '😑'}
           {gameStatus === 'OnGoing' && '😊'}
           {gameStatus === 'Lost' && '😭'}
           {gameStatus === 'Won' && '😁'}
