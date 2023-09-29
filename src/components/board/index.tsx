@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { useEffect } from 'react';
 import { Square } from '../../features/board/actions';
 import {
   ClickSquare,
@@ -12,11 +13,43 @@ function Board(): JSX.Element {
   const { squares } = useAppSelector((state) => state.board);
   const dispatch = useAppDispatch();
 
-  const handleMouseUpOnSquare = (square: Square): void => {
-    if (timeoutInstance) clearTimeout(timeoutInstance);
-    if (square.hasFlag || square.state !== 'hidden') return;
+  useEffect(() => {
+    const handleContextmenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+    document.addEventListener('contextmenu', handleContextmenu);
+    return function cleanup() {
+      document.removeEventListener('contextmenu', handleContextmenu);
+    };
+  }, []);
 
-    dispatch(ClickSquare({ squareX: square.squareX, squareY: square.squareY }));
+  const handleClickOnSquare = (
+    ev: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    square: Square,
+  ): void => {
+    if (timeoutInstance) clearTimeout(timeoutInstance);
+
+    let isRightMB;
+    if ('which' in ev)
+      // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+      isRightMB = ev.which === 3;
+    else if ('button' in ev)
+      // IE, Opera
+      isRightMB = ev.button === 2;
+
+    if (isRightMB) {
+      dispatch(
+        ToogleFlagOnSquare({
+          squareX: square.squareX,
+          squareY: square.squareY,
+        }),
+      );
+    } else {
+      if (square.hasFlag || square.state !== 'hidden') return;
+      dispatch(
+        ClickSquare({ squareX: square.squareX, squareY: square.squareY }),
+      );
+    }
   };
 
   const handleMouseDownOnSquare = (square: Square): void => {
@@ -46,8 +79,9 @@ function Board(): JSX.Element {
                 key={'square-' + x}
                 className={getSquareClasses(square)}
                 style={getSquareStyle(square)}
+                onMouseUp={(e) => handleClickOnSquare(e, square)}
                 onMouseDown={() => handleMouseDownOnSquare(square)}
-                onMouseUp={() => handleMouseUpOnSquare(square)}
+                onContextMenu={() => console.log('oi')}
               >
                 {square.state !== 'hidden' && (
                   <>
