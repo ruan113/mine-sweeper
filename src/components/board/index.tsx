@@ -33,6 +33,7 @@ function Board(): JSX.Element {
     if ('which' in ev) isRightMB = ev.which === 3;
     else if ('button' in ev) isRightMB = ev.button === 2;
 
+    if (square.state !== 'hidden') return;
     if (isRightMB) {
       dispatch(
         ToogleFlagOnSquare({
@@ -41,7 +42,7 @@ function Board(): JSX.Element {
         }),
       );
     } else {
-      if (square.hasFlag || square.state !== 'hidden') return;
+      if (square.hasFlag) return;
       dispatch(
         ClickSquare({ squareX: square.squareX, squareY: square.squareY }),
       );
