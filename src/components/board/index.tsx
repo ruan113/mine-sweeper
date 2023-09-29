@@ -30,12 +30,8 @@ function Board(): JSX.Element {
     if (timeoutInstance) clearTimeout(timeoutInstance);
 
     let isRightMB;
-    if ('which' in ev)
-      // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
-      isRightMB = ev.which === 3;
-    else if ('button' in ev)
-      // IE, Opera
-      isRightMB = ev.button === 2;
+    if ('which' in ev) isRightMB = ev.which === 3;
+    else if ('button' in ev) isRightMB = ev.button === 2;
 
     if (isRightMB) {
       dispatch(
@@ -52,7 +48,16 @@ function Board(): JSX.Element {
     }
   };
 
-  const handleMouseDownOnSquare = (square: Square): void => {
+  const handleMouseDownOnSquare = (
+    ev: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    square: Square,
+  ): void => {
+    let isRightMB;
+    if ('which' in ev) isRightMB = ev.which === 3;
+    else if ('button' in ev) isRightMB = ev.button === 2;
+
+    if (isRightMB) return;
+
     if (square.state !== 'hidden') return;
     if (timeoutInstance) clearTimeout(timeoutInstance);
 
@@ -80,8 +85,7 @@ function Board(): JSX.Element {
                 className={getSquareClasses(square)}
                 style={getSquareStyle(square)}
                 onMouseUp={(e) => handleClickOnSquare(e, square)}
-                onMouseDown={() => handleMouseDownOnSquare(square)}
-                onContextMenu={() => console.log('oi')}
+                onMouseDown={(e) => handleMouseDownOnSquare(e, square)}
               >
                 {square.state !== 'hidden' && (
                   <>
